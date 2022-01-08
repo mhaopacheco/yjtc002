@@ -41,15 +41,15 @@ DATA ld_req_id TYPE trkorr.
 FIELD-SYMBOLS: <fs_e070> LIKE LINE OF it_e070.
 
 SELECTION-SCREEN: BEGIN OF BLOCK b1 WITH FRAME TITLE TEXT-001. .
-  PARAMETERS: p_trkorr LIKE e070-trkorr               OBLIGATORY MODIF ID dst.
-  PARAMETERS: p_name   LIKE tmsbuftxt-text.
-  PARAMETERS: p_type   LIKE e070___preview-trfunction OBLIGATORY MODIF ID typ DEFAULT 'T'.
-  PARAMETERS: p_targ   LIKE ccprofsr-target_sys       OBLIGATORY MODIF ID dst DEFAULT 'GSQ'.
+PARAMETERS: p_trkorr LIKE e070-trkorr               OBLIGATORY MODIF ID dst.
+PARAMETERS: p_name   LIKE tmsbuftxt-text.
+PARAMETERS: p_type   LIKE e070___preview-trfunction OBLIGATORY MODIF ID typ DEFAULT 'T'.
+PARAMETERS: p_targ   LIKE ccprofsr-target_sys       OBLIGATORY MODIF ID dst DEFAULT TEXT-003 .
 SELECTION-SCREEN: END OF BLOCK b1.
 
 SELECTION-SCREEN: BEGIN OF BLOCK b2 WITH FRAME TITLE TEXT-002 .
-  PARAMETERS: p_import TYPE xfeld,
-              p_client TYPE mandt DEFAULT '500'.
+PARAMETERS: p_import TYPE xfeld,
+            p_client TYPE mandt DEFAULT TEXT-004.
 SELECTION-SCREEN: END OF BLOCK b2.
 
 *INCLUDE zcreate_transport_request_top.
@@ -399,9 +399,9 @@ FORM import_tr USING uv_tr TYPE trkorr .
 *     iv_subset                  =
 *     iv_offline                 =
 *     iv_feedback                =
-     iv_monitor                 = 'X'
+      iv_monitor                 = 'X'
 *     iv_force                   =
-     iv_verbose                 = ' '
+      iv_verbose                 = ' '
 *     is_batch                   =
 *     it_requests                =
 *     it_clients                 =
@@ -443,13 +443,13 @@ ENDFORM.
 FORM display_tr USING uv_tr TYPE trkorr .
 
 
-  call function 'TRINT_TDR_USER_COMMAND'
+  CALL FUNCTION 'TRINT_TDR_USER_COMMAND'
     EXPORTING
       iv_object  = uv_tr
       iv_type    = 'T'
       iv_command = 'TAST'
 *    IMPORTING
-*      ev_exit    =
+*     ev_exit    =
     .
 
 ENDFORM.
