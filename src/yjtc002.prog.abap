@@ -342,16 +342,19 @@ AT SELECTION-SCREEN ON VALUE-REQUEST FOR p_trkorr.
 START-OF-SELECTION.
 
   PERFORM create_tr.
-  IF ld_req_id IS NOT INITIAL AND p_type EQ 'T'.
+  IF ld_req_id IS NOT INITIAL AND p_type = 'T'.
     PERFORM add_objects.
     PERFORM release_tr.
 *   Import order in target
     IF p_import IS NOT INITIAL .
       PERFORM import_tr USING ld_req_id .
     ENDIF.
+
+    PERFORM display_tr USING ld_req_id .
+  ELSE.
+    PERFORM show_log.
   ENDIF.
 
-  PERFORM show_log.
 *&---------------------------------------------------------------------*
 *& Form import_tr
 *&---------------------------------------------------------------------*
@@ -418,11 +421,35 @@ FORM import_tr USING uv_tr TYPE trkorr .
       table_of_requests_is_empty = 2
       OTHERS                     = 3.
 
-  IF sy-subrc <> 0.
-    MESSAGE ID sy-msgid TYPE sy-msgty NUMBER sy-msgno
-      WITH sy-msgv1 sy-msgv2 sy-msgv3 sy-msgv4.
+
+  DATA(ls_syst) = CORRESPONDING syst( lv_exception ) .
+
+  IF ls_syst-msgty = 'E'.
+    MESSAGE ID ls_syst-msgid TYPE ls_syst-msgty NUMBER ls_syst-msgno
+      WITH ls_syst-msgv1 ls_syst-msgv2 ls_syst-msgv3 ls_syst-msgv4.
   ELSE.
     MESSAGE 'Import Correcto' TYPE 'S' DISPLAY LIKE 'I' .
   ENDIF.
+
+ENDFORM.
+*&---------------------------------------------------------------------*
+*& Form display_tr
+*&---------------------------------------------------------------------*
+*& text
+*&---------------------------------------------------------------------*
+*& -->  p1        text
+*& <--  p2        text
+*&---------------------------------------------------------------------*
+FORM display_tr USING uv_tr TYPE trkorr .
+
+
+  call function 'TRINT_TDR_USER_COMMAND'
+    EXPORTING
+      iv_object  = uv_tr
+      iv_type    = 'T'
+      iv_command = 'TAST'
+*    IMPORTING
+*      ev_exit    =
+    .
 
 ENDFORM.
