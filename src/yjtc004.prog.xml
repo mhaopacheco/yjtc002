@@ -6,6 +6,7 @@
     <NAME>YJTC004</NAME>
     <DBAPL>S</DBAPL>
     <SUBC>1</SUBC>
+    <APPL>X</APPL>
     <FIXPT>X</FIXPT>
     <LDBNAME>D$S</LDBNAME>
     <UCCHECK>X</UCCHECK>

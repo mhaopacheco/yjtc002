@@ -45,6 +45,7 @@ PARAMETERS: p_trkorr LIKE e070-trkorr               OBLIGATORY MODIF ID dst.
 PARAMETERS: p_name   LIKE tmsbuftxt-text.
 PARAMETERS: p_type   LIKE e070___preview-trfunction OBLIGATORY MODIF ID typ DEFAULT 'T'.
 PARAMETERS: p_targ   LIKE ccprofsr-target_sys       OBLIGATORY MODIF ID dst DEFAULT TEXT-003 .
+PARAMETERS: p_bukrs  TYPE bukrs.
 SELECTION-SCREEN: END OF BLOCK b1.
 
 SELECTION-SCREEN: BEGIN OF BLOCK b2 WITH FRAME TITLE TEXT-002 .
